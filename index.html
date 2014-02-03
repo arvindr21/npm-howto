@@ -1,1 +1,460 @@
-My GitHub Page
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>NPM - How to Create your own Node module - A Quick Start Tutorial</title>
+    <meta name="description" content="NPM - How to Create your own Node module - A Quick Start Tutorial - Arvind Ravulavaru">
+    <meta name="author" content="Arvind Ravulavaru">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" target="_blank" href="css/reveal.min.css">
+    <link rel="stylesheet" target="_blank" href="css/theme/simple.css" id="theme">
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" target="_blank" href="lib/css/zenburn.css">
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+        document.write('<link rel="stylesheet" target="_blank" href="css/print/' + (window.location.search.match(/print-pdf/gi) ? 'pdf' : 'paper') + '.css" type="text/css" media="print">');
+    </script>
+    <!--[if lt IE 9]>
+      <script src="lib/js/html5shiv.js"></script>
+      <![endif]-->
+</head>
+
+<body>
+    <div class="reveal">
+       <div class="slides">
+    <section >
+        <h1>NPMjs</h1>
+<h3>How to set up your own NPM module</h3>
+<div>
+        <br>
+    </div>
+<div>Feb, 2014</div>
+<div>
+    <br>
+</div>
+<div>
+<br>
+</div>
+<div>
+<br>
+</div>
+<div>
+<br>
+</div>
+<div>
+<br>
+</div>
+<div style="text-align: right; ">&nbsp;Arvind Ravulavaru</div>
+</section>
+<section >
+    <h2>Contents</h2><br/>
+    <div style="text-align: left; ">
+        <ul>
+            <li>How to develop a Node Module</li>
+            <li>How to leverage that Node Module</li>
+        </ul>
+    </div>
+</section>
+<section >
+    <h3>Steps to Create your Node Module</h3><br/>
+    <div style="text-align: left; ">
+        <ul>
+            <li>Step 1 : Create and clone a git hub repository</li>
+            <li>Step 2 : Create a package.json and include dependencies</li>
+            <li>Step 3 : Create test cases for your code</li>
+            <li>Step 4 : Create an account with NPM (one time) and publish your module</li>
+        </ul>
+    </div>
+</section>
+<section >
+    <h2>Step - 1</h2><br/>
+    <div style="text-align: left; ">
+        <span style="font-size: 35.94248962402344px; font-style: normal; font-variant: normal;">&nbsp;Create and clone a git hub repository</span>
+        <br>
+    </div>
+    <div style="text-align: left; ">
+        <ul>
+            <li>Go to <a target="_blank" href="https://github.com/">https://github.com/</a></li>
+            <li>Create a new account</li>
+            <li>Create a new repository<a target="_blank" href="https://github.com/new">https://github.com/new</a></li>
+            <li>Get the git clone url (Should be on the right hide side of the project main page) and clone it to a folder (myModule)</li>
+            <ul>
+                <li>ex:<i>git@github.com:arvindr21/npm-calculator.git</i></li>
+            </ul>
+        </ul>
+    </div>
+</section>
+<section >
+    <h2 style="margin-top:-32px;">Step - 2</h2><br/>
+    <div style="text-align: left; ">
+        <span style="font-size: 35.94248962402344px; font-style: normal; font-variant: normal;">Create a package.json and include dependencies</span>
+        <br>
+    </div>
+    <div style="text-align: left; ">
+        <ul>
+            <li>Typically to build a node module, you need Node as well as npm</li>
+            <li>Head to <a target="_blank" href="http://nodejs.org/">http://nodejs.org/</a> and click on the <i>shiny green <b>Install</b>
+            </i>&nbsp;button - the set up is fairly simple</li>
+            <li>Then open a terminal/command prompt and run <br/><i>npm -v</i>&nbsp; to verify the installation</li>
+            <li>Next, open folder:&nbsp;<span style="font-size: 35.94248962402344px; font-style: normal; font-variant: normal;">myModule, open/navigate your terminal/prompt here & execute </span>
+            <span style="font-size: 35.94248962402344px; font-variant: normal;">
+                <i>npm init</i>. This will ask a set of questions and Bam!! you have your package.json file</span>
+            </li>
+        </ul><br/><br/>
+        <div style="text-align: right;">PS: We are creating a calculator node module <br/> Sample package.json -></div>
+    </div>
+</section>
+<section >
+    <h2 style="margin-top:-29px;">Package.json</h2>
+       <pre><code class="javascript" style="max-height:619px;">{
+  "name": "npm-calculator",
+  "version": "1.0.1",
+  "description": "This is a demo npm-calculator",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine-node specs/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arvindr21/npm-calculator.git"
+  },
+  "keywords": [
+    "calculator"
+  ],
+  "author": "Arvind Ravulavaru",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arvindr21/npm-calculator/issues"
+  },
+  "homepage": "https://github.com/arvindr21/npm-calculator",
+  "devDependencies": {
+    "jasmine-node": "~1.13.1"
+  }
+}
+</code></pre>
+</section>
+<section >
+    <h2>Step - 2</h2>
+    <div style="text-align: left; ">Create a file (index.js) at the root of the folder, and add the below code to index.js. This is our node module.</div>
+    <div style="text-align: left; ">
+        <pre><code class="javascript" style="max-height:488px;">exports.add = function(a,b)
+{
+	return a+b;
+};
+	
+exports.subtract = function(a,b)
+{
+	return a-b;
+};
+	
+exports.multiply = function(a,b)
+{
+	return a*b;
+};
+
+exports.divide = function(a,b)
+{
+	return a/b;
+};
+	
+exports.modulo = function(a,b)
+{
+	return a%b;
+};
+
+</code></pre>
+    </div>
+</section>
+<section >
+    <h2>Our Module so far..</h2>
+    <br/>
+    <div style="text-align: left; ">
+            myModule (Root Folder)
+            <br/>
+            | - index.js<br/> 
+            | - package.json<br/> 
+        
+</div>
+</section>
+<section >
+    <h2>Step - 3</h2><br/>
+    <div style="text-align: left; ">
+        <span style="font-size: 35.94248962402344px; font-style: normal; font-variant: normal;">&nbsp;Create Test cases and validate our module</span>
+        <br>
+    </div>
+    <div style="text-align: left; ">
+        <ul>
+            <li>As you can see from the sample package.json earlier, we have added a <i>"devDependencies"</i> section</li>
+            <li>Lets set that up. Back to terminal/prompt and run <i>"npm install"</i> </li>
+            <li>As you can see, this has added our jasmine-node testing framework to our module</li>
+			<li>Create a folder called <i>"specs"</i> at the root and add a file called <i>"calculator-spec.js"</i></li>
+			<li>This is where our test cases reside</li>
+
+            </ul>
+        </ul>
+    </div>
+</section>
+<section >
+    <h2>Our Module so far..</h2>
+    <br/>
+    <div style="text-align: left; ">
+            myModule (Root Folder)
+            <br/>
+            | - index.js<br/> 
+            | - package.json<br/> 
+            | - node_module<br/> 
+        	 &nbsp;&nbsp;&nbsp;- /jasmine-node <br/>
+        	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- ... <br/>
+            | - specs<br/>
+             &nbsp;&nbsp;&nbsp; - /calculator-spec.js 
+</div>
+</section>
+<section >
+    <h2>Step - 3</h2>
+    <div style="text-align: left; ">Jasmine test cases for the calculator module. Copy the below to calculator-spec.js</div>
+    <div style="text-align: left; ">
+        <pre><code class="javascript" style="max-height:488px;">var calculator = require("../index");
+ 
+describe("multiplication", function () {
+ // Add 2 numbers
+  it("should add 2 and 3", function () {
+    var sum = calculator.add(2, 3);
+    expect(sum).toBe(5);
+  });
+ 
+ 
+  // Subtract 2 numbers
+  it("should Subtract 2 and 3", function () {
+    var difference = calculator.subtract(2, 3);
+    expect(difference).toBe(-1);
+  });
+ 
+  // Multiply 2 numbers
+  it("should Multiply 2 and 3", function () {
+    var product = calculator.multiply(2, 3);
+    expect(product).toBe(6);
+  });
+ 
+  // Divide 2 numbers
+  it("should Divide 6 and 2", function () {
+    var reminder = calculator.divide(6, 2);
+    expect(reminder).toBe(3);
+  });
+ 
+ 
+  // Modulo 2 numbers
+  it("should Modulo 6 and 2", function () {
+    var quot = calculator.modulo(6, 2);
+    expect(quot).toBe(0);
+  });
+ 
+ 
+ 
+ });  
+
+</code></pre>
+    </div>
+</section>
+<section >
+    <h2>Step - 3</h2><br/>
+    <div style="text-align: left; ">
+        <span style="font-size: 35.94248962402344px; font-style: normal; font-variant: normal;">&nbsp;Execute the created test cases</span>
+        <br>
+    </div>
+    <div style="text-align: left; ">
+        <ul>
+            <li>Back to terminal/prompt, execute <i>"npm test"</i></li>
+            <li>This will let you know, if everything is fine or not. Ideally it should say <br/><i>"5 tests, 5 assertions, 0 failures, 0 skipped"</i></li>
+            </ul>
+        </ul>
+    </div>
+</section>
+<section >
+    <h2>Step - 4</h2><br/>
+    <div style="text-align: left; ">
+        <span style="font-size: 35.94248962402344px; font-style: normal; font-variant: normal;">&nbsp;Create a npmjs account</span>
+        <br>
+    </div>
+    <div style="text-align: left; ">
+        <ul>
+            <li>Go to <a href="https://npmjs.org/signup" target="_blank">https://npmjs.org/signup</a> and create an account</li>
+            <li>Come back to the terminal/prompt and execute <br/><i>"npm adduser"</i><br/>provide your credentials and then <br/><i>"npm publish"</i>
+<br/>
+<li>You can go to <a href="https://npmjs.org/~" target="_blank">https://npmjs.org/~</a> and your package will be listed at the bottom of the page. (login if needed)</li>
+            </li>
+            </ul>
+      
+        <br /><br />
+<i style="text-align:center;display:block;">"Bam!!"</i>
+    </div>
+</section>
+<section >
+    <h3>Steps to use the created NPM Module</h3>
+    <div style="text-align: left; ">
+        <ul>
+            <li>Step 1 : Create a folder in which you want to install the NPM Module</li>
+            <li>Step 2 : Install Node (if not already done)</li>
+            <li>Step 3 : execute <i>'npm init' -&nbsp;</i>
+            <span>Follow the steps above to create a package.json</span>
+        </li>
+        <li>Step 4 : Add the package name as a dev dependency</li>
+        <li>Step 5 : Execute <i>'npm install'</i>
+    </li>
+    <li>Step 6 : Leverage the library for your application</li><br/>
+    <div>PS: If you are testing your package, create a new folder called <i>"myCalcApp"</i> and follow the above & next steps. Update your terminal/prompt path too.</div>
+    <br/>
+    <div style="text-align: right;">Sample package.json & myApp.js -></div>
+</ul>
+</div>
+</section>
+<section >
+    <h2>Package.json</h2><br/>
+       <pre><code class="javascript">{
+  "name": "myCalcApp",
+  "version": "0.0.1",
+  "description": "This is a calculator app that leverages the npm-calculator module to execute a few functions",
+  "main": "myApp.js",
+  "author": "Arvind Ravulavaru",
+  "license": "MIT",
+  "devDependencies" : {
+  	"npm-calculator" : "latest"
+  }
+}
+</code></pre>
+</section>
+
+<section>
+    <h2>myApp.js</h2><br/>
+       <pre><code class="javascript">var calculator = require("npm-calculator");
+console.log(calculator.add(5,4));
+</code></pre>
+<ul>
+<li>Save both the files and the run <i>"npm install"</i> to install the calculator app and its dependencies</li>
+<li>Then execute <i>"node myApp.js"</i></li>
+<li>The output would be</li>
+</ul>
+<pre><code class="javascript">9
+</code></pre><br />
+<i>"Bam!!"</i>
+</section>
+<section >
+    <h2>Resources</h2><br/>
+   
+    <div style="text-align: left; ">
+        <ul>
+        	<li><a href="https://nodejs.org" target="_blank">Nodejs</a></li>
+            <li><a href="https://npmjs.org" target="_blank">NPMjs</a></li>
+            <li><a href="http://nodeguide.com/" target="_blank">Node Guide</a></li>
+            <li><a href="https://github.com/" target="_blank">Github.com</a></li>
+            <li><a href="http://www.vogella.com/tutorials/Git/article.html" target="_blank">Git Tutorial</a></li>
+            <li><a href="http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository" target="_blank">Git Clone/Fork</a></li>
+            </ul>
+        </ul>
+    </div>
+</section>
+  <section >
+        <h1>Thanks!</h1>
+
+      
+
+<div>
+    <br>
+</div>
+<div>
+    <br>
+</div>
+<div>
+    <br>
+</div>
+<div>
+<br>
+</div>
+<div>
+<br>
+</div>
+<div>
+<br>
+</div>
+<div>
+<br>
+</div>
+<div style="text-align: right; ">&nbsp;@aravulavaru</div>
+</section>
+</div>
+
+
+    </div>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+    <script>
+        // Full list of configuration options available here:
+         // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: false,
+            overview: true,
+            previewLinks: false,
+            transition: 'cube',
+            viewDistance: 3,
+
+            theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+            transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+            // Parallax scrolling
+            // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+            // parallaxBackgroundSize: '2100px 900px',
+
+            // Optional libraries used to extend on reveal.js
+            dependencies: [{
+                src: 'lib/js/classList.js',
+                condition: function () {
+                    return !document.body.classList;
+                }
+            }, {
+                src: 'plugin/markdown/marked.js',
+                condition: function () {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            }, {
+                src: 'plugin/markdown/markdown.js',
+                condition: function () {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            }, {
+                src: 'plugin/highlight/highlight.js',
+                async: true,
+                callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            }, {
+                src: 'plugin/zoom-js/zoom.js',
+                async: true,
+                condition: function () {
+                    return !!document.body.classList;
+                }
+            }, {
+                src: 'plugin/notes/notes.js',
+                async: true,
+                condition: function () {
+                    return !!document.body.classList;
+                }
+            }]
+        });
+    </script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-47722912-1', 'arvindr21.github.io');
+  ga('send', 'pageview');
+
+</script>
+</body>
+
+</html>
